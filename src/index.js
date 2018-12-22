@@ -10,8 +10,6 @@ class App extends React.Component {
             latitude: '',
             longitude: ''
         }
-    }
-    render() {
         navigator.geolocation.getCurrentPosition(
             success => {
                 this.setState({
@@ -23,9 +21,12 @@ class App extends React.Component {
                 console.log(error);
             },
         );
-        return (<div> <strong>Latitude:</strong>  {this.state.latitude}, <strong>Longitude:</strong>  {this.state.longitude} </div>);
-        }
-    
     }
-ReactDOM.render( < App /> , document.getElementById("root"));
+    render() {
+
+        return (<div> <strong>Latitude:</strong>  {this.state.latitude}, <strong>Longitude:</strong>  {this.state.longitude} </div>);
+    }
+
+}
+ReactDOM.render(< App />, document.getElementById("root"));
 serviceWorker.register();
