@@ -11,6 +11,33 @@ class App extends React.Component {
             longitude: '',
             errorMsg: ''
         }
+        
+    }
+    render() {
+        if (this.state.errorMsg) {
+            return (
+                <span>{this.state.errorMsg}</span>
+            )
+        }
+        else if (!this.state.latitude || !this.state.longitude) {
+            return (
+                <span>Loading ...</span>
+            )
+        }
+        else {
+            return (
+                <div>
+                    <strong>Latitude:</strong>  {this.state.latitude}
+                    <br />
+                    <strong>Longitude:</strong>  {this.state.longitude}
+                    <br />
+                </div>
+            );
+        }
+
+    }
+    componentDidMount() {
+        console.log('Did Mount');
         navigator.geolocation.getCurrentPosition(
             success => {
                 this.setState({
@@ -25,29 +52,6 @@ class App extends React.Component {
                 })
             },
         );
-    }
-    render() {
-        if (this.state.errorMsg) {
-            return (
-                <span>{this.state.errorMsg}</span>
-            )
-        }
-        else if (!this.state.latitude || !this.state.longitude){
-            return (
-                <span>Loading ...</span>
-            )
-        }
-        else{
-            return (
-                <div>
-                    <strong>Latitude:</strong>  {this.state.latitude}
-                    <br />
-                    <strong>Longitude:</strong>  {this.state.longitude}
-                    <br />
-                </div>
-            );
-        }
-        
     }
 }
 ReactDOM.render(< App />, document.getElementById("root"));
