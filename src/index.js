@@ -8,7 +8,8 @@ class App extends React.Component {
         super();
         this.state = {
             latitude: '',
-            longitude: ''
+            longitude: '',
+            errorMsg: ''
         }
         navigator.geolocation.getCurrentPosition(
             success => {
@@ -19,14 +20,35 @@ class App extends React.Component {
             },
             error => {
                 console.log(error);
+                this.setState({
+                    errorMsg: error.message
+                })
             },
         );
     }
     render() {
-
-        return (<div> <strong>Latitude:</strong>  {this.state.latitude}, <strong>Longitude:</strong>  {this.state.longitude} </div>);
+        if (this.state.errorMsg) {
+            return (
+                <span>{this.state.errorMsg}</span>
+            )
+        }
+        else if (!this.state.latitude || !this.state.longitude){
+            return (
+                <span>Loading ...</span>
+            )
+        }
+        else{
+            return (
+                <div>
+                    <strong>Latitude:</strong>  {this.state.latitude}
+                    <br />
+                    <strong>Longitude:</strong>  {this.state.longitude}
+                    <br />
+                </div>
+            );
+        }
+        
     }
-
 }
 ReactDOM.render(< App />, document.getElementById("root"));
 serviceWorker.register();
