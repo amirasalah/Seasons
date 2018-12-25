@@ -1,7 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "semantic-ui-css/semantic.min.css";
-import * as serviceWorker from "./serviceWorker";
+import SeasonsDisplay from './SeasonsDisplay';
+import ErrorMessage from './ErrorMessage';
+import Laoding from './Loading';
 
 class App extends React.Component {
     constructor() {
@@ -11,33 +13,27 @@ class App extends React.Component {
             longitude: '',
             errorMsg: ''
         }
-        
     }
     render() {
         if (this.state.errorMsg) {
             return (
-                <span>{this.state.errorMsg}</span>
+                <ErrorMessage error={this.state.errorMsg}/>
             )
         }
         else if (!this.state.latitude || !this.state.longitude) {
             return (
-                <span>Loading ...</span>
+                <Laoding/>
             )
         }
         else {
             return (
-                <div>
-                    <strong>Latitude:</strong>  {this.state.latitude}
-                    <br />
-                    <strong>Longitude:</strong>  {this.state.longitude}
-                    <br />
-                </div>
-            );
+                <SeasonsDisplay
+                    latitude={this.state.latitude}
+                    longitude={this.state.longitude} />
+            )
         }
-
     }
     componentDidMount() {
-        console.log('Did Mount');
         navigator.geolocation.getCurrentPosition(
             success => {
                 this.setState({
@@ -46,7 +42,6 @@ class App extends React.Component {
                 })
             },
             error => {
-                console.log(error);
                 this.setState({
                     errorMsg: error.message
                 })
@@ -55,4 +50,3 @@ class App extends React.Component {
     }
 }
 ReactDOM.render(< App />, document.getElementById("root"));
-serviceWorker.register();
