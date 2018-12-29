@@ -1,11 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "semantic-ui-css/semantic.min.css";
 import SeasonsDisplay from './SeasonsDisplay';
 import ErrorMessage from './ErrorMessage';
 import Laoding from './Loading';
-
 class App extends React.Component {
+    
     constructor() {
         super();
         this.state = {
@@ -14,15 +13,16 @@ class App extends React.Component {
             errorMsg: ''
         }
     }
+
     render() {
         if (this.state.errorMsg) {
             return (
-                <ErrorMessage error={this.state.errorMsg}/>
+                <ErrorMessage error={this.state.errorMsg} />
             )
         }
         else if (!this.state.latitude || !this.state.longitude) {
             return (
-                <Laoding/>
+                <Laoding />
             )
         }
         else {
